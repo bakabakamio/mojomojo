@@ -1,6 +1,6 @@
-# Content License for “mojo-mojo”
+# Content License for “mojo mojo”
 
-All original content published on the “mojo-mojo” blog — including but not
+All original content published on the “mojo mojo” blog — including but not
 limited to posts, essays, photographs, illustrations, and other media — is
 © 2025 bakamio. All Rights Reserved.
 

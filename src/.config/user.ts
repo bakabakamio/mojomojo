@@ -2,16 +2,16 @@ import type { UserConfig } from '~/types'
 
 export const userConfig: Partial<UserConfig> = {
   site: {
-    title: 'mojo-mojo',
-    subtitle: '瞬间记忆',
+    title: 'mojo mojo',
+    subtitle: '不純喫茶',
     author: 'bakamio',
     description: 'bakamio的个人博客',
-    website: 'http://localhost:4321/',
+    website: 'https://mojomojo-blog.vercel.app/',
     pageSize: 10,
     socialLinks: [
       {
         name: 'github',
-        href: 'https://github.com/bakabakamio/mojo-mojo',
+        href: 'https://github.com/bakabakamio/mojomojo',
       },
       {
         name: 'rss',
@@ -36,11 +36,9 @@ export const userConfig: Partial<UserConfig> = {
         href: '/about',
       },
     ],
-    categoryMap: [{ name: '新玩意', path: 'new-stuff' }],
+    categoryMap: [],
     footer: [
       '© %year <a target="_blank" href="%website">%author</a> ♥︎',
-      'Theme <a target="_blank" href="https://github.com/Moeyua/astro-theme-typography">Typography</a> by <a target="_blank" href="https://moeyua.com">Moeyua</a>',
-      'Proudly published with <a target="_blank" href="https://astro.build/">Astro</a>',
     ],
   },
   appearance: {
