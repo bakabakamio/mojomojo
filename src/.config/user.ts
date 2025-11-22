@@ -2,8 +2,8 @@ import type { UserConfig } from '~/types'
 
 export const userConfig: Partial<UserConfig> = {
   site: {
-    title: 'mojo-mojo',
-    subtitle: '瞬间记忆',
+    title: 'mojo mojo',
+    subtitle: '不純喫茶',
     author: 'bakamio',
     description: 'bakamio的个人博客',
     website: 'http://localhost:4321/',
