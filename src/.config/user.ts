@@ -6,7 +6,7 @@ export const userConfig: Partial<UserConfig> = {
     subtitle: '不純喫茶',
     author: 'bakamio',
     description: 'bakamio的个人博客',
-    website: 'http://localhost:4321/',
+    website: 'https://mojomojo-blog.vercel.app/',
     pageSize: 10,
     socialLinks: [
       {
@@ -39,8 +39,6 @@ export const userConfig: Partial<UserConfig> = {
     categoryMap: [{ name: '新玩意', path: 'new-stuff' }],
     footer: [
       '© %year <a target="_blank" href="%website">%author</a> ♥︎',
-      'Theme <a target="_blank" href="https://github.com/Moeyua/astro-theme-typography">Typography</a> by <a target="_blank" href="https://moeyua.com">Moeyua</a>',
-      'Proudly published with <a target="_blank" href="https://astro.build/">Astro</a>',
     ],
   },
   appearance: {
