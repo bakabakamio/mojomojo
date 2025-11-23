@@ -1,12 +1,12 @@
 {
-  "name": "mojo-mojo",
+  "name": "mojomojo",
   "type": "module",
   "version": "0.1.0",
   "packageManager": "pnpm@10.13.1",
   "description": "bakamio的个人博客",
   "author": "bakamio",
   "license": "MIT",
-  "repository": "https://github.com/bakabakamio/mojo-mojo",
+  "repository": "https://github.com/bakabakamio/mojomojo",
   "scripts": {
     "dev": "astro check && astro dev",
     "build": "astro check && astro build",

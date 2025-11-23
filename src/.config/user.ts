@@ -2,7 +2,7 @@ import type { UserConfig } from '~/types'
 
 export const userConfig: Partial<UserConfig> = {
   site: {
-    title: 'mojo mojo',
+    title: 'mojomojo',
     subtitle: '不純喫茶',
     author: 'bakamio',
     description: 'bakamio的个人博客',
@@ -11,7 +11,7 @@ export const userConfig: Partial<UserConfig> = {
     socialLinks: [
       {
         name: 'github',
-        href: 'https://github.com/bakabakamio/mojo-mojo',
+        href: 'https://github.com/bakabakamio/mojomojo',
       },
       {
         name: 'rss',
