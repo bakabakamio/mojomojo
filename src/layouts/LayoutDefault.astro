@@ -8,6 +8,7 @@ import LaTeX from '~/components/LaTeX.astro'
 import Analytics from '~/components/Analytics.astro'
 import ThemeScript from '~/components/ThemeScript.astro'
 import VercelAnalytics from '@vercel/analytics/astro'
+import SpeedInsights from '@vercel/speed-insights/astro'
 import '~/styles/global.css'
 
 const lang = themeConfig.appearance.locale ?? 'en-us'
@@ -20,6 +21,7 @@ const dark = themeConfig.appearance.theme === 'dark'
     <LaTeX />
     <Analytics />
     <VercelAnalytics />
+    <SpeedInsights />
     <ThemeScript />
   </head>
 
