@@ -6,7 +6,7 @@ export const userConfig: Partial<UserConfig> = {
     subtitle: '不純喫茶',
     author: 'bakamio',
     description: 'bakamio的个人博客',
-    website: 'https://mojomojo-blog.vercel.app/',
+    website: 'https://mojo-mojo.vercel.app/',
     pageSize: 10,
     socialLinks: [
       {

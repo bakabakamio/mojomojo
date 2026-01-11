@@ -44,7 +44,7 @@ Email ➡️ hellomio@foxmail.com
 
 | Timeline       | Name                                                    | Period                 |
 | -------------- | ------------------------------------------------------- | ---------------------- |
-| 独立博客时期   | [不純喫茶 mojo mojo](https://mojomojo-blog.vercel.app/) | 11/22/2025～现在       |
+| 独立博客时期   | [不純喫茶 mojo mojo](https://mojo-mojo.vercel.app/) | 11/22/2025～现在       |
 | Hedwig 时期    | [瞬](https://mio.hedwig.pub/)                           | 11/19/2022～12/24/2025 |
 | 少数派专栏时期 | [瞬间记忆](https://sspai.com/column/313)                | 11/19/2021～11/19/2022 |
 
