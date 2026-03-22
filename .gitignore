@@ -22,6 +22,4 @@ pnpm-debug.log*
 
 # Editor and IDE files
 .obsidian/
-
-# Templates (local content templates)
-templates/
+.vscode/
