@@ -1,0 +1,3 @@
+## 2024-05-19 - Optimizing Array Sorting in Astro Content Collections
+**Learning:** Using `dayjs` instantiation inside `Array.prototype.sort` callbacks for date comparison causes severe performance bottlenecks due to `O(N log N)` object allocations. Native `Date.prototype.valueOf()` numeric comparisons are vastly faster (orders of magnitude) and functionally equivalent for simple chronological sorting of Astro collections.
+**Action:** When sorting arrays of data containing Dates, avoid heavy constructor/parser functions (like `dayjs(date)`) inside the sort loop. Always prefer comparing native primitive values using `.getTime()` or `.valueOf()`.
