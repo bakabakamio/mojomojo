@@ -24,15 +24,17 @@ export async function getCategories() {
 export async function getPosts(isArchivePage = false) {
   const posts = await getCollection('posts')
 
+  // ⚡ Bolt: Optimize sorting by replacing dayjs() parsing with native Date.valueOf()
+  // This avoids O(N log N) object allocations and significantly speeds up the sort comparison
   posts.sort((a, b) => {
     if (isArchivePage) {
-      return dayjs(a.data.pubDate).isBefore(dayjs(b.data.pubDate)) ? 1 : -1
+      return a.data.pubDate.valueOf() < b.data.pubDate.valueOf() ? 1 : -1
     }
 
-    const aDate = a.data.modDate ? dayjs(a.data.modDate) : dayjs(a.data.pubDate)
-    const bDate = b.data.modDate ? dayjs(b.data.modDate) : dayjs(b.data.pubDate)
+    const aDate = a.data.modDate ?? a.data.pubDate
+    const bDate = b.data.modDate ?? b.data.pubDate
 
-    return aDate.isBefore(bDate) ? 1 : -1
+    return aDate.valueOf() < bDate.valueOf() ? 1 : -1
   })
 
   if (import.meta.env.PROD) {
