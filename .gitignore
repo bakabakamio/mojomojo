@@ -23,3 +23,6 @@ pnpm-debug.log*
 # Editor and IDE files
 .obsidian/
 .vscode/
+
+# Local AI agent state/config
+.jules/
