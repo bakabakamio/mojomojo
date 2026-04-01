@@ -1,3 +1,4 @@
+// @ts-ignore
 import type { Link, Meta } from 'astro-seo'
 import type {
   AvailableLanguage,
