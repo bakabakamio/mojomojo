@@ -26,7 +26,7 @@ export async function getPosts(isArchivePage = false) {
 
   // ⚡ Bolt: Optimize sorting by replacing dayjs() parsing with native Date.valueOf()
   // This avoids O(N log N) object allocations and significantly speeds up the sort comparison
-  posts.sort((a, b) => {
+  posts.sort((a: Post, b: Post) => {
     if (isArchivePage) {
       return a.data.pubDate.valueOf() < b.data.pubDate.valueOf() ? 1 : -1
     }
@@ -38,7 +38,7 @@ export async function getPosts(isArchivePage = false) {
   })
 
   if (import.meta.env.PROD) {
-    return posts.filter(post => post.data.draft !== true)
+    return posts.filter((post: Post) => post.data.draft !== true)
   }
 
   return posts
@@ -50,7 +50,10 @@ export function getPostDescription(post: Post) {
     return post.data.description
   }
 
-  const html = parser.render(post.body || '')
+  // ⚡ Bolt: Optimize markdown parsing by slicing the first 4000 characters
+  // This significantly reduces the overhead of parsing and sanitizing very large markdown files,
+  // making the rendering of post descriptions much faster, especially on index pages.
+  const html = parser.render((post.body || '').slice(0, 4000))
   const sanitized = sanitizeHtml(html, { allowedTags: [] })
   return sanitized.slice(0, 400)
 }
