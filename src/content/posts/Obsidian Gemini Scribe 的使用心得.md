@@ -2,7 +2,7 @@
 title: "Obsidian Gemini Scribe 的使用心得"
 pubDate: "2026-04-04"
 categories:
-  - productivity
+  - Productivity
 ---
 
 今天想稍微分享一下 Obsidian 使用 [Gemini Scribe](https://github.com/allenhutchison/obsidian-gemini) 插件的一些感想。

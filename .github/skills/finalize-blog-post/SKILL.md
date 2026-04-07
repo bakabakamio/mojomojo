@@ -40,12 +40,18 @@ banner: images/banner.png
 - If images are not in the folder, move them or update references accordingly.
 - Ensure paths are relative and correct for the static site generation.
 
+## Quotation Marks Rule
+
+- Convert all quotation marks in the post content to Japanese corner quotes `「」`.
+- Replace both straight quotes and curly quotes with `「」` where appropriate.
+- Do not convert quotes that appear within English sentences.
+- Remove any extra spaces immediately inside or outside `「」` after conversion.
+
 ## Procedure
 
 1. Read the post file.
 2. If no front matter, generate it based on rules above.
-3. If the post does not start with an H1 heading, shift all heading levels up by one (e.g., ## becomes #, ### becomes ##).
-4. After completing step 3, if there is an H1 heading identical to the title in front matter, remove it.
-5. Scan for image references and update paths to relative `images/` format.
-6. Save the updated file.
-7. Optionally, run `pnpm typecheck` to validate against schema.
+3. Scan for image references and update paths to relative `images/` format.
+4. Convert quotation marks according to the quotation marks rule.
+5. Save the updated file.
+6. Optionally, run `pnpm typecheck` to validate against schema.
