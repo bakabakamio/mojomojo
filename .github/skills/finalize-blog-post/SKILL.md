@@ -25,8 +25,8 @@ Example:
 
 ```yaml
 ---
-title: "My Blog Post"
-pubDate: "2026-04-04"
+title: My Blog Post
+pubDate: 2026-04-04
 categories:
   - tech
 banner: images/banner.png
