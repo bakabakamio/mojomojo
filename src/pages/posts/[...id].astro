@@ -59,8 +59,12 @@ function getUrl(id: string) {
     const target = event.target as HTMLElement
     const icon = target.querySelector('.icon') as HTMLElement
     icon.classList.replace('i-mdi-content-copy', 'i-mdi-check')
+    target.setAttribute('aria-label', 'Copied!')
+    target.setAttribute('title', 'Copied!')
     setTimeout(() => {
       icon.classList.replace('i-mdi-check', 'i-mdi-content-copy')
+      target.setAttribute('aria-label', 'Copy code')
+      target.setAttribute('title', 'Copy code')
     }, 1500)
   })
 
@@ -74,6 +78,8 @@ function getUrl(id: string) {
     const code = codeBlock.querySelector('code')
     copyButton.value = code?.textContent ?? ''
     copyButton.className = 'clipboard-copy'
+    copyButton.setAttribute('aria-label', 'Copy code')
+    copyButton.setAttribute('title', 'Copy code')
     copyButton.innerHTML = icon
 
     codeBlock.appendChild(copyButton)
@@ -99,7 +105,8 @@ function getUrl(id: string) {
     border-radius: 0.25rem;
   }
 
-  .clipboard-copy:hover {
+  .clipboard-copy:hover,
+  .clipboard-copy:focus-visible {
     background-color: #30363d;
   }
 </style>
