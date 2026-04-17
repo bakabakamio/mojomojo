@@ -21,8 +21,17 @@ export async function getCategories() {
   return categories
 }
 
+let _postsPromise: Promise<Post[]> | undefined
+
+// ⚡ Bolt: Cache the posts collection promise to avoid repeated filesystem reads and parsing during the build process.
+// Caching the promise prevents cache stampedes during parallel static generation.
 export async function getPosts(isArchivePage = false) {
-  const posts = await getCollection('posts')
+  if (!_postsPromise || !import.meta.env.PROD) {
+    _postsPromise = getCollection('posts')
+  }
+  const cachedPosts = await _postsPromise
+  // Shallow copy to allow independent sorting per call without mutating the cached array
+  const posts = [...cachedPosts]
 
   // ⚡ Bolt: Optimize sorting by replacing dayjs() parsing with native Date.valueOf()
   // This avoids O(N log N) object allocations and significantly speeds up the sort comparison

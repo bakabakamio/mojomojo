@@ -1,3 +1,4 @@
+// eslint-disable-next-line ts/ban-ts-comment
 // @ts-ignore
 import type { Link, Meta } from 'astro-seo'
 import type {
