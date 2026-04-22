@@ -4,53 +4,79 @@ import dayjs from 'dayjs'
 import MarkdownIt from 'markdown-it'
 import sanitizeHtml from 'sanitize-html'
 
+let _categoriesPromise: Promise<Map<string, Post[]>> | undefined
+
 export async function getCategories() {
-  const posts = await getPosts()
-  const categories = new Map<string, Post[]>()
+  if (!_categoriesPromise || !import.meta.env.PROD) {
+    _categoriesPromise = (async () => {
+      const posts = await getPosts()
+      const categories = new Map<string, Post[]>()
 
-  for (const post of posts) {
-    if (post.data.categories) {
-      for (const c of post.data.categories) {
-        const posts = categories.get(c) || []
-        posts.push(post)
-        categories.set(c, posts)
+      for (const post of posts) {
+        if (post.data.categories) {
+          for (const c of post.data.categories) {
+            const posts = categories.get(c) || []
+            posts.push(post)
+            categories.set(c, posts)
+          }
+        }
       }
-    }
-  }
 
-  return categories
+      return categories
+    })()
+  }
+  return _categoriesPromise
 }
 
 let _postsPromise: Promise<Post[]> | undefined
+let _sortedPosts: Post[] | undefined
+let _sortedArchivePosts: Post[] | undefined
 
 // ⚡ Bolt: Cache the posts collection promise to avoid repeated filesystem reads and parsing during the build process.
 // Caching the promise prevents cache stampedes during parallel static generation.
+// ⚡ Bolt: Also cache the sorted and filtered results. This avoids O(N log N) sort and O(N) filter on every call.
 export async function getPosts(isArchivePage = false) {
   if (!_postsPromise || !import.meta.env.PROD) {
     _postsPromise = getCollection('posts')
+    _sortedPosts = undefined
+    _sortedArchivePosts = undefined
   }
-  const cachedPosts = await _postsPromise
-  // Shallow copy to allow independent sorting per call without mutating the cached array
-  const posts = [...cachedPosts]
 
-  // ⚡ Bolt: Optimize sorting by replacing dayjs() parsing with native Date.valueOf()
-  // This avoids O(N log N) object allocations and significantly speeds up the sort comparison
-  posts.sort((a: Post, b: Post) => {
-    if (isArchivePage) {
-      return a.data.pubDate.valueOf() < b.data.pubDate.valueOf() ? 1 : -1
+  const getSortedAndFiltered = async (archive: boolean) => {
+    const cachedPosts = await _postsPromise!
+    const posts = [...cachedPosts]
+
+    // ⚡ Bolt: Optimize sorting by replacing dayjs() parsing with native Date.valueOf()
+    // This avoids O(N log N) object allocations and significantly speeds up the sort comparison
+    posts.sort((a: Post, b: Post) => {
+      if (archive) {
+        return a.data.pubDate.valueOf() < b.data.pubDate.valueOf() ? 1 : -1
+      }
+
+      const aDate = a.data.modDate ?? a.data.pubDate
+      const bDate = b.data.modDate ?? b.data.pubDate
+
+      return aDate.valueOf() < bDate.valueOf() ? 1 : -1
+    })
+
+    if (import.meta.env.PROD) {
+      return posts.filter((post: Post) => post.data.draft !== true)
     }
 
-    const aDate = a.data.modDate ?? a.data.pubDate
-    const bDate = b.data.modDate ?? b.data.pubDate
-
-    return aDate.valueOf() < bDate.valueOf() ? 1 : -1
-  })
-
-  if (import.meta.env.PROD) {
-    return posts.filter((post: Post) => post.data.draft !== true)
+    return posts
   }
 
-  return posts
+  if (isArchivePage) {
+    if (!_sortedArchivePosts || !import.meta.env.PROD) {
+      _sortedArchivePosts = await getSortedAndFiltered(true)
+    }
+    return [..._sortedArchivePosts]
+  }
+
+  if (!_sortedPosts || !import.meta.env.PROD) {
+    _sortedPosts = await getSortedAndFiltered(false)
+  }
+  return [..._sortedPosts]
 }
 
 const parser = new MarkdownIt()
