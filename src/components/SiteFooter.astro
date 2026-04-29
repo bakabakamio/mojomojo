@@ -1,38 +1,13 @@
 ---
-import { themeConfig } from '~/.config'
-import sanitizeHtml from 'sanitize-html'
+import { getParsedFooters } from '~/utils/footer'
 
-const year = new Date().getFullYear()
-
-const { website, author, footer } = themeConfig.site
-
-function parseFooter(str: string) {
-  str = str.replace(/%author/g, author)
-  str = str.replace(/%website/g, website)
-  str = str.replace(/%year/g, year.toString())
-
-  return sanitizeHtml(str, {
-    allowedTags: ['a', 'b', 'i', 'strong', 'em', 'span', 'br'],
-    allowedAttributes: {
-      a: ['href', 'target', 'rel'],
-      span: ['class', 'style'],
-    },
-    transformTags: {
-      a: (tagName, attribs) => {
-        return {
-          tagName,
-          attribs: {
-            ...attribs,
-            ...(attribs.target === '_blank' ? { rel: 'noopener noreferrer' } : {}),
-          },
-        }
-      },
-    },
-  })
-}
+// ⚡ Bolt: Cache parsed footer HTML to avoid expensive sanitizeHtml calls on every page render.
+// During SSG, SiteFooter renders on every single page. Since the footer configuration is static,
+// we cache the sanitized result at the module level in `~/utils/footer.ts` to significantly reduce HTML parsing overhead.
+const parsedFooters = getParsedFooters()
 ---
 
-{footer.length && footer.map((str) => <p set:html={parseFooter(str)} />)}
+{parsedFooters && parsedFooters.length > 0 && parsedFooters.map((html) => <p set:html={html} />)}
 
 <style>
   p {
