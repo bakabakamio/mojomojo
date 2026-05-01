@@ -19,4 +19,5 @@ html {
   --at-apply: 'decoration-underline decoration-0.1em decoration-offset-2px';
   --at-apply: 'ease-in-out duration-300ms';
   --at-apply: 'hover:(c-background bg-primary decoration-primary)';
+  --at-apply: 'focus-visible:(outline-2 outline-offset-2 outline-primary)';
 }
