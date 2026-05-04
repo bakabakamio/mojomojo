@@ -18,8 +18,8 @@ Front matter must follow the YAML format with these fields:
 
 - **title**: String. Extract from the first H1 heading (`# Title`). If no H1, use the filename without extension.
 - **pubDate**: String in YYYY-MM-DD format. Set to the current date.
-- **categories**: Array of strings. Infer from content keywords or leave empty array if unclear.
-- **banner**: String (optional). Path to a banner image if present, e.g., `images/banner.jpg`. Validate image size ≤4096px if possible.
+- **categories**: Array of strings. Use a single category unless the user explicitly requests multiple categories. Infer from content keywords or leave empty array if unclear.
+- **banner**: String (optional). Do not add a banner by default unless the user explicitly requests it. If present, use a path like `images/banner.jpg` and validate image size ≤4096px if possible.
 
 Example:
 
