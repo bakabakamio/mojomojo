@@ -22,6 +22,7 @@ function getListItems(posts: Post[]) {
     title: post.data.title,
     href: `/posts/${post.id}/`,
     date: formatDate(post.data.pubDate),
+    rawDate: post.data.pubDate ?? new Date(),
   }))
   return result
 }
@@ -32,12 +33,12 @@ function getListItems(posts: Post[]) {
     <h2 class="post-title"># {name}</h2>
     <ul class="pl-6 py-3" flex="~ col gap-4">
       {
-        getListItems(posts).map(({ title, href, date }) => (
+        getListItems(posts).map(({ title, href, date, rawDate }) => (
           <li>
             <h3 class="post-title">
               <a href={href}>{title}</a>
             </h3>
-            <time>{date}</time>
+            <time datetime={rawDate.toISOString()}>{date}</time>
           </li>
         ))
       }
