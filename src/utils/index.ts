@@ -80,9 +80,31 @@ export async function getPosts(isArchivePage = false) {
 }
 
 const parser = new MarkdownIt()
+// ⚡ Bolt: Cache parsed post descriptions to avoid repeatedly parsing and sanitizing markdown across pages.
+// Markdown parsing and HTML sanitization are CPU-intensive operations. During SSG build,
+// `getPostDescription` may be called multiple times for the same post (e.g. index, pagination).
+// Caching the result significantly reduces build time by bypassing these expensive operations on subsequent calls.
+let _descriptionCache: Map<string, string> | undefined
+
 export function getPostDescription(post: Post) {
   if (post.data.description) {
     return post.data.description
+  }
+
+  if (!import.meta.env.PROD) {
+    // ⚡ Bolt: Bypass caching in development mode to ensure Hot Module Replacement (HMR) works correctly.
+    // If we cached here, edits to markdown descriptions wouldn't be reflected without a full server restart.
+    const html = parser.render((post.body || '').slice(0, 4000))
+    const sanitized = sanitizeHtml(html, { allowedTags: [] })
+    return sanitized.slice(0, 400)
+  }
+
+  if (!_descriptionCache) {
+    _descriptionCache = new Map()
+  }
+
+  if (_descriptionCache.has(post.id)) {
+    return _descriptionCache.get(post.id)!
   }
 
   // ⚡ Bolt: Optimize markdown parsing by slicing the first 4000 characters
@@ -90,7 +112,11 @@ export function getPostDescription(post: Post) {
   // making the rendering of post descriptions much faster, especially on index pages.
   const html = parser.render((post.body || '').slice(0, 4000))
   const sanitized = sanitizeHtml(html, { allowedTags: [] })
-  return sanitized.slice(0, 400)
+  const desc = sanitized.slice(0, 400)
+
+  _descriptionCache.set(post.id, desc)
+
+  return desc
 }
 
 export function formatDate(date: Date, format: string = 'YYYY-MM-DD') {

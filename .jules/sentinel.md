@@ -1,4 +1,5 @@
 ## 2024-05-04 - [Path Traversal and Command Injection in Post Generator]
+
 **Vulnerability:** The `scripts/create-post.ts` script used `execSync` to run shell commands based on user input for filenames. It also used `path.join` on the unsanitized input, making it vulnerable to path traversal (saving files outside the intended directory) and shell command injection.
 **Learning:** Developers often forget that internal tooling or CLI scripts must treat developer input as untrusted. Command injection in local dev scripts can be exploited if a malicious actor convinces a developer to paste an unexpected string into a CLI prompt, or if the script is automated in an unsafe environment (e.g. CI/CD pipelines).
 **Prevention:** Always validate and sanitize user input before passing it to shell execution functions like `execSync` or file system utilities like `path.join`. Use a whitelist of allowed characters for filenames (e.g., alphanumeric and safe symbols) or rigorously filter out dangerous shell metacharacters and traversal patterns (e.g., `..`, `/`, `\`, `;`, `|`, `&`, `$`).
