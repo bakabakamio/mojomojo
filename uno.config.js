@@ -25,10 +25,14 @@ const cssExtend = {
     'white-space': 'normal',
     'word-wrap': 'break-word',
     'padding': '2px 4px',
-    'color': '#c7254e',
+    'color': 'inherit',
     'font-size': '90%',
-    'background-color': '#f9f2f4',
+    'background-color': 'rgba(81, 82, 81, 0.10)',
     'border-radius': '4px',
+  },
+
+  '.dark :where(:not(pre):not(a) > code)': {
+    'background-color': 'rgba(247, 226, 223, 0.12)',
   },
 
   'li': {
@@ -49,7 +53,9 @@ export default defineConfig({
     ],
     [
       /^scrollbar-hide$/,
-      ([_]) => `.scrollbar-hide { scrollbar-width:none;-ms-overflow-style: none; }
+      ([
+        _,
+      ]) => `.scrollbar-hide { scrollbar-width:none;-ms-overflow-style: none; }
       .scrollbar-hide::-webkit-scrollbar {display:none;}`,
     ],
   ],
@@ -58,7 +64,7 @@ export default defineConfig({
     presetTypography({ cssExtend }),
     presetAttributify(),
     presetIcons({ scale: 1.2, warn: true }),
-    presetTheme ({
+    presetTheme({
       theme: {
         dark: {
           colors: { ...colorsDark, shadow: '#FFFFFF0A' },
@@ -71,9 +77,7 @@ export default defineConfig({
     colors: { ...colorsLight, shadow: '#0000000A' },
     fontFamily: fonts,
   },
-  shortcuts: [
-    ['post-title', 'text-5 font-bold lh-7.5 m-0'],
-  ],
+  shortcuts: [['post-title', 'text-5 font-bold lh-7.5 m-0']],
   transformers: [transformerDirectives(), transformerVariantGroup()],
   safelist: [
     ...themeConfig.site.socialLinks.map(social => `i-mdi-${social.name}`),

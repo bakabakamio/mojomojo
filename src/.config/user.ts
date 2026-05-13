@@ -11,7 +11,7 @@ export const userConfig: Partial<UserConfig> = {
     socialLinks: [
       {
         name: 'github',
-        href: 'https://github.com/bakabakamio/mojomojo',
+        href: 'https://github.com/bakabakamio',
       },
       {
         name: 'rss',
