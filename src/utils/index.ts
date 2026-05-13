@@ -44,7 +44,11 @@ export async function getPosts(isArchivePage = false) {
 
   const getSortedAndFiltered = async (archive: boolean) => {
     const cachedPosts = await _postsPromise!
-    const posts = [...cachedPosts]
+
+    // ⚡ Bolt: Optimize by filtering drafts BEFORE sorting to reduce the array size for the sort operation.
+    const posts = import.meta.env.PROD
+      ? cachedPosts.filter((post: Post) => post.data.draft !== true)
+      : [...cachedPosts]
 
     // ⚡ Bolt: Optimize sorting by replacing dayjs() parsing with native Date.valueOf()
     // This avoids O(N log N) object allocations and significantly speeds up the sort comparison
@@ -58,10 +62,6 @@ export async function getPosts(isArchivePage = false) {
 
       return aDate.valueOf() < bDate.valueOf() ? 1 : -1
     })
-
-    if (import.meta.env.PROD) {
-      return posts.filter((post: Post) => post.data.draft !== true)
-    }
 
     return posts
   }
