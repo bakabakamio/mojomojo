@@ -10,7 +10,11 @@ const { translate: t } = Astro.locals
     {
       navLinks.map((nav) => (
         <li>
-          <a class="" href={nav.href}>
+          <a
+            class=""
+            href={nav.href}
+            aria-current={Astro.url.pathname === nav.href || Astro.url.pathname === nav.href + '/' ? 'page' : undefined}
+          >
             {t(nav.name)}
           </a>
         </li>
