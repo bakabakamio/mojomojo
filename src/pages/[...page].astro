@@ -10,12 +10,22 @@ const { translate: t } = Astro.locals
 
 export const getStaticPaths = (async ({ paginate }) => {
   const posts = await getPosts()
-  posts.sort((a, b) => {
-    if (a.data.pin && !b.data.pin) return -1
-    if (!a.data.pin && b.data.pin) return 1
-    return 0
-  })
-  return paginate(posts, { pageSize: themeConfig.site.pageSize })
+
+  // ⚡ Bolt: Optimize pinned posts by using an O(N) partition instead of O(N log N) sort.
+  // Since `posts` are already date-sorted by `getPosts()`, we just need to group pinned
+  // posts at the top while preserving relative order. A single pass loop is significantly faster.
+  const pinned: typeof posts = []
+  const unpinned: typeof posts = []
+  for (const post of posts) {
+    if (post.data.pin) {
+      pinned.push(post)
+    } else {
+      unpinned.push(post)
+    }
+  }
+  const orderedPosts = [...pinned, ...unpinned]
+
+  return paginate(orderedPosts, { pageSize: themeConfig.site.pageSize })
 }) satisfies GetStaticPaths
 
 type Props = InferGetStaticPropsType<typeof getStaticPaths>
