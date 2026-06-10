@@ -12,3 +12,8 @@
 
 **Learning:** When trying to optimize array sorting of large object collections by using a Schwartzian transform (map-sort-map) to avoid repetitive `.valueOf()` evaluations during `sort` comparisons, I learned that in JavaScript/V8 environments this can actually be an anti-pattern. The overhead of the mapping loops, creating multiple temporary objects, and the resulting garbage collection pressure outweighs the benefit of caching the sort key. It adds code complexity without a real-world benefit.
 **Action:** Avoid complex array sort optimizations like the Schwartzian transform in JavaScript. Stick to simpler logic, but do prioritize reducing the size of the array before sorting (e.g., filtering out drafts first).
+
+## 2024-06-10 - Astro Middleware Hoisting
+
+**Learning:** In Astro, the `onRequest` middleware executes per-render for every statically generated page during build time. Variables and functions defined inside the middleware scope are repeatedly evaluated and allocated, causing unnecessary overhead and garbage collection pressure.
+**Action:** Always hoist static dependencies (e.g., config parsing, static dictionaries, helper functions) outside the `onRequest` middleware to initialize them only once per module load.
