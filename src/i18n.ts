@@ -22,6 +22,7 @@ export const LANGUAGES = {
     next: '下一页',
     prev_post: '上一篇',
     next_post: '下一篇',
+    skip_to_content: '跳至内容',
   },
   'en-us': {
     Home: 'Home',
@@ -46,6 +47,7 @@ export const LANGUAGES = {
     next: 'Next',
     prev_post: 'Previous post',
     next_post: 'Next post',
+    skip_to_content: 'Skip to content',
   },
   'zh-tw': {
     Home: '首頁',
@@ -70,6 +72,7 @@ export const LANGUAGES = {
     next: '下一頁',
     prev_post: '上一篇',
     next_post: '下一篇',
+    skip_to_content: '跳至內容',
   },
   'ja-jp': {
     Home: 'ホーム',
@@ -94,6 +97,7 @@ export const LANGUAGES = {
     next: '次へ',
     prev_post: '前の投稿',
     next_post: '次の投稿',
+    skip_to_content: 'メインコンテンツへスキップ',
   },
   'it-it': {
     Home: 'Home',
@@ -118,5 +122,6 @@ export const LANGUAGES = {
     next: 'Successivo',
     prev_post: 'Articolo Precedente',
     next_post: 'Articolo Succesivo',
+    skip_to_content: 'Passa al contenuto principale',
   },
 }
