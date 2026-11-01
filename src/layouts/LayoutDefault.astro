@@ -13,6 +13,7 @@ import '~/styles/global.css'
 
 const lang = themeConfig.appearance.locale ?? 'en-us'
 const dark = themeConfig.appearance.theme === 'dark'
+const { translate: t } = Astro.locals
 ---
 
 <html lang={lang} class:list={['animation-prepared', { dark }]}>
@@ -30,6 +31,11 @@ const dark = themeConfig.appearance.theme === 'dark'
     p="7.5 lg:(y-0 x-20)"
     lg="grid gap-x-6 cols-[3fr_1fr] rows-[1fr_9rem]"
   >
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-background focus:text-primary"
+      >{t('skip_to_content')}</a
+    >
     <header
       class="transition-swup-header flex flex-col gap-2.5"
       m="7.5 lg:(x-0 t-20 b-4)"
@@ -39,7 +45,11 @@ const dark = themeConfig.appearance.theme === 'dark'
       <SiteNavigation />
     </header>
 
-    <main class="transition-swup-main overflow-y-scroll scrollbar-hide outline-none" lg="row-1-3 col-1-2 py-20 ">
+    <main
+      id="main-content"
+      class="transition-swup-main overflow-y-scroll scrollbar-hide outline-none"
+      lg="row-1-3 col-1-2 py-20 "
+    >
       <slot />
     </main>
 
