@@ -23,3 +23,7 @@ pnpm-debug.log*
 # Editor and IDE files
 .obsidian/
 .vscode/
+
+# Retired Jules agent notes
+/.jules/
+/.Jules/
