@@ -2,6 +2,7 @@
 import { themeConfig } from '~/.config'
 
 const { title, subtitle } = themeConfig.site
+const { translate: t } = Astro.locals
 ---
 
 <hgroup
@@ -14,6 +15,7 @@ const { title, subtitle } = themeConfig.site
     lg:p="x-2.5 b-12 hover:(t-3.75 b-8.75)"
     hover:lg=" bg-primary color-background"
     href="/"
+    aria-label={`${title} - ${t('Home')}`}
   >
     <h3 class="text-5 font-extrabold font-header">{subtitle}</h3>
     <h1 class="text-8 font-extrabold font-header">{title}</h1>
